@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Mes livraisons - AgriMarket</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <style>
+
+        body {
+            background-color: #f5f9f6;
+        }
+
+        .navbar-agri {
+            background-color: #146c43;
+            padding: 15px 0;
+        }
+
+        .title-agri {
+            color: #146c43;
+            font-weight: 700;
+        }
+
+        .delivery-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .delivery-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background-color: #e8f5ee;
+            color: #146c43;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 25px;
+        }
+
+        .badge-livraison {
+            background-color: #198754;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-agri">
+
+    <div class="container">
+
+        <a href="{% url 'dashboard' %}"
+           class="navbar-brand text-white fw-bold">
+
+            🌱 AgriUNCHK
+
+        </a>
+
+
+        <div>
+
+            <a href="{% url 'mes_commandes' %}"
+               class="btn btn-light btn-sm me-2">
+
+                <i class="bi bi-bag-check"></i>
+
+                Mes commandes
+
+            </a>
+
+
+            <form method="post"
+                  action="{% url 'logout' %}"
+                  class="d-inline">
+
+                {% csrf_token %}
+
+                <button type="submit"
+                        class="btn btn-light btn-sm">
+
+                    <i class="bi bi-box-arrow-right"></i>
+
+                    Déconnexion
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- CONTENU -->
+
+<div class="container py-5">
+
+
+    <h1 class="title-agri">
+
+        🚚 Mes livraisons
+
+    </h1>
+
+
+    <p class="text-muted mb-4">
+
+        Suivez l'état de vos commandes en cours de livraison.
+
+    </p>
+
+
+
+    {% for commande in livraisons %}
+
+
+        <div class="card delivery-card p-4 mb-4">
+
+
+            <div class="row align-items-center">
+
+
+                <!-- ICON -->
+
+                <div class="col-md-1 text-center">
+
+                    <div class="delivery-icon mx-auto">
+
+                        <i class="bi bi-truck"></i>
+
+                    </div>
+
+                </div>
+
+
+                <!-- INFORMATIONS -->
+
+                <div class="col-md-7">
+
+                    <h5 class="title-agri">
+
+                        Commande #{{ commande.id }}
+
+                    </h5>
+
+
+                    <p class="text-muted mb-2">
+
+                        Commandée le :
+
+                        {{ commande.date_commande|date:"d/m/Y à H:i" }}
+
+                    </p>
+
+
+                    <p class="mb-1">
+
+                        <strong>
+
+                            Adresse de livraison :
+
+                        </strong>
+
+                    </p>
+
+
+                    <p class="text-muted">
+
+                        <i class="bi bi-geo-alt"></i>
+
+                        {{ commande.adresse_livraison }}
+
+                    </p>
+
+                </div>
+
+
+                <!-- STATUT -->
+
+                <div class="col-md-4 text-md-end">
+
+
+                    <span class="badge-livraison">
+
+                        <i class="bi bi-truck"></i>
+
+                        {{ commande.get_statut_display }}
+
+                    </span>
+
+
+                    <h5 class="title-agri mt-3">
+
+                        {{ commande.total }} FCFA
+
+                    </h5>
+
+
+                    <a href="{% url 'commande_detail' commande.id %}"
+                       class="btn btn-outline-success btn-sm">
+
+                        Voir les détails
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+            <hr>
+
+
+            <!-- PRODUITS -->
+
+            <h6 class="title-agri">
+
+                Produits commandés
+
+            </h6>
+
+
+            {% for ligne in commande.lignes.all %}
+
+                <div class="d-flex justify-content-between mb-2">
+
+                    <span>
+
+                        <strong>
+                            {{ ligne.stock.produit.nom }}
+                        </strong>
+
+                        — {{ ligne.quantite }}
+                        {{ ligne.stock.produit.unite }}
+
+                    </span>
+
+
+                    <span>
+
+                        {{ ligne.sous_total }} FCFA
+
+                    </span>
+
+                </div>
+
+            {% endfor %}
+
+
+        </div>
+
+
+    {% empty %}
+
+
+        <!-- AUCUNE LIVRAISON -->
+
+        <div class="card delivery-card">
+
+            <div class="card-body text-center py-5">
+
+
+                <div class="delivery-icon mx-auto">
+
+                    <i class="bi bi-truck"></i>
+
+                </div>
+
+
+                <h4 class="mt-3">
+
+                    Aucune livraison en cours
+
+                </h4>
+
+
+                <p class="text-muted">
+
+                    Vous n'avez actuellement aucune commande
+                    en cours de livraison.
+
+                </p>
+
+
+                <a href="{% url 'catalogue' %}"
+                   class="btn btn-success">
+
+                    <i class="bi bi-basket"></i>
+
+                    Voir les produits
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+    {% endfor %}
+
+
+</div>
+
+
+</body>
+
+</html>

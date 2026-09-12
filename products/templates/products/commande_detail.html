@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Commande #{{ commande.id }} - AgriMarket</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <style>
+
+        body {
+            background-color: #f5f9f6;
+        }
+
+        .navbar-agri {
+            background-color: #087f4f;
+            min-height: 70px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 21px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .logo:hover {
+            color: white;
+        }
+
+        .page-container {
+            padding-top: 45px;
+            padding-bottom: 50px;
+        }
+
+        .title-agri {
+            color: #087f4f;
+            font-weight: 700;
+        }
+
+        .order-card {
+            border: none;
+            border-radius: 18px;
+            box-shadow: 0 7px 25px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+        }
+
+        .order-header {
+            background-color: #eaf7ef;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .order-icon {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background-color: white;
+            color: #087f4f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            font-size: 35px;
+        }
+
+        .order-number {
+            color: #087f4f;
+            font-weight: 700;
+            margin-top: 15px;
+        }
+
+        .info-box {
+            background-color: #f8faf9;
+            border-radius: 12px;
+            padding: 15px;
+            height: 100%;
+        }
+
+        .info-label {
+            color: #6c757d;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-weight: 600;
+        }
+
+        .product-card {
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
+        }
+
+        .product-name {
+            color: #087f4f;
+            font-weight: 700;
+        }
+
+        .total-box {
+            background-color: #eaf7ef;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .total-price {
+            color: #087f4f;
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .delivery-box {
+            background-color: #fff8e8;
+            border-left: 4px solid #f0ad4e;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .btn-agri {
+            background-color: #198754;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            padding: 11px 20px;
+            font-weight: 600;
+        }
+
+        .btn-agri:hover {
+            background-color: #087f4f;
+            color: white;
+        }
+
+        .btn-outline-agri {
+            border: 1px solid #198754;
+            color: #087f4f;
+            border-radius: 9px;
+            padding: 11px 20px;
+            font-weight: 600;
+        }
+
+        .btn-outline-agri:hover {
+            background-color: #eaf7ef;
+            color: #087f4f;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-agri">
+
+    <div class="container">
+
+        <a href="{% url 'dashboard' %}"
+           class="logo">
+
+            🌱 AgriMarket
+
+        </a>
+
+
+        <a href="{% url 'catalogue_particulier' %}"
+           class="btn btn-light btn-sm">
+
+            <i class="bi bi-arrow-left"></i>
+
+            Produits
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- CONTENU -->
+
+<div class="container page-container">
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="col-lg-8">
+
+
+            <div class="card order-card">
+
+
+                <!-- EN-TÊTE -->
+
+                <div class="order-header">
+
+                    <div class="order-icon">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                    </div>
+
+                    <h2 class="order-number">
+
+                        Commande #{{ commande.id }}
+
+                    </h2>
+
+                    <p class="text-muted mb-0">
+
+                        Votre commande a bien été enregistrée.
+
+                    </p>
+
+                </div>
+
+
+
+                <div class="card-body p-4 p-md-5">
+
+
+                    <!-- INFORMATIONS COMMANDE -->
+
+                    <div class="row g-3 mb-4">
+
+
+                        <div class="col-md-6">
+
+                            <div class="info-box">
+
+                                <div class="info-label">
+
+                                    <i class="bi bi-calendar3"></i>
+
+                                    Date de commande
+
+                                </div>
+
+                                <div class="info-value">
+
+                                    {{ commande.date_commande|date:"d/m/Y à H:i" }}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="info-box">
+
+                                <div class="info-label">
+
+                                    <i class="bi bi-clock"></i>
+
+                                    Statut
+
+                                </div>
+
+                                <div class="info-value">
+
+                                    <span class="badge bg-warning text-dark">
+
+                                        {{ commande.get_statut_display }}
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- ADRESSE -->
+
+                    <div class="info-box mb-4">
+
+                        <div class="info-label">
+
+                            <i class="bi bi-geo-alt"></i>
+
+                            Adresse de livraison
+
+                        </div>
+
+                        <div class="info-value">
+
+                            {{ commande.adresse_livraison }}
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PRODUITS -->
+
+                    <h4 class="title-agri mb-3">
+
+                        <i class="bi bi-basket"></i>
+
+                        Produits commandés
+
+                    </h4>
+
+
+                    {% for ligne in commande.lignes.all %}
+
+
+                        <div class="product-card">
+
+
+                            <div class="d-flex justify-content-between align-items-start">
+
+
+                                <div>
+
+                                    <h5 class="product-name">
+
+                                        {{ ligne.stock.produit.nom }}
+
+                                    </h5>
+
+                                    <p class="text-muted mb-2">
+
+                                        Producteur :
+                                        {{ ligne.stock.producteur.nom }}
+
+                                    </p>
+
+                                </div>
+
+
+                                <i class="bi bi-box-seam fs-3 text-success"></i>
+
+
+                            </div>
+
+
+                            <hr>
+
+
+                            <div class="row">
+
+
+                                <div class="col-md-4">
+
+                                    <small class="text-muted">
+
+                                        Quantité
+
+                                    </small>
+
+                                    <div class="fw-semibold">
+
+                                        {{ ligne.quantite }}
+                                        {{ ligne.stock.produit.unite }}
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-md-4">
+
+                                    <small class="text-muted">
+
+                                        Prix unitaire
+
+                                    </small>
+
+                                    <div class="fw-semibold">
+
+                                        {{ ligne.prix_unitaire }}
+                                        FCFA
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-md-4">
+
+                                    <small class="text-muted">
+
+                                        Sous-total
+
+                                    </small>
+
+                                    <div class="fw-semibold text-success">
+
+                                        {{ ligne.sous_total }}
+                                        FCFA
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    {% endfor %}
+
+
+
+                    <!-- TOTAL -->
+
+                    <div class="total-box mt-4 mb-4">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <span class="fw-semibold">
+
+                                Total de la commande
+
+                            </span>
+
+                            <span class="total-price">
+
+                                {{ commande.total }}
+                                FCFA
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- LIVRAISON -->
+
+                    <div class="delivery-box mb-4">
+
+                        <strong>
+
+                            <i class="bi bi-truck"></i>
+
+                            Livraison
+
+                        </strong>
+
+                        <p class="mb-0 mt-1">
+
+                            Les frais de livraison seront discutés
+                            directement avec le livreur.
+
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- STATUT -->
+
+                    <div class="alert alert-info">
+
+                        <i class="bi bi-info-circle"></i>
+
+                        Votre commande est actuellement :
+
+                        <strong>
+
+                            {{ commande.get_statut_display }}
+
+                        </strong>.
+
+                    </div>
+
+
+
+                    <!-- BOUTONS -->
+
+                    <div class="d-flex gap-2 flex-wrap">
+
+
+                        <a href="{% url 'mes_commandes' %}"
+                           class="btn btn-outline-agri">
+
+                            <i class="bi bi-box-seam"></i>
+
+                            Mes commandes
+
+                        </a>
+
+
+                        <a href="{% url 'catalogue_particulier' %}"
+                           class="btn btn-agri">
+
+                            <i class="bi bi-cart"></i>
+
+                            Continuer mes achats
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+:root {
+    --vert-principal: #198754;
+    --vert-fonce: #146c43;
+    --vert-clair: #e8f5e9;
+    --gris-fond: #f7f9f7;
+    --gris-texte: #66736b;
+}
+
+body {
+    background-color: var(--gris-fond);
+    color: #26332b;
+    font-family: Arial, sans-serif;
+}
+
+
+/* Cartes */
+
+.card-agri {
+    background-color: white;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px rgba(20, 108, 67, 0.10);
+}
+
+
+/* Titres */
+
+.title-agri {
+    color: var(--vert-fonce);
+    font-weight: 700;
+}
+
+
+/* Boutons */
+
+.btn-agri {
+    background-color: var(--vert-principal);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 11px 20px;
+    font-weight: 600;
+}
+
+.btn-agri:hover {
+    background-color: var(--vert-fonce);
+    color: white;
+}
+
+
+/* Champs */
+
+.form-control,
+.form-select {
+    border: 1px solid #d5e3d9;
+    border-radius: 8px;
+    padding: 11px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--vert-principal);
+    box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.15);
+}
+
+
+/* Navbar */
+
+.navbar-agri {
+    background-color: var(--vert-fonce);
+    padding: 15px 0;
+}
+
+
+/* Liens */
+
+.link-agri {
+    color: var(--vert-principal);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.link-agri:hover {
+    color: var(--vert-fonce);
+}
+
+
+/* Petits écrans */
+
+@media (max-width: 576px) {
+
+    .card-agri {
+        padding: 20px !important;
+    }
+
+}

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Commandes - Administration</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+
+        body {
+            background-color: #f5f9f6;
+        }
+
+        .navbar-agri {
+            background-color: #146c43;
+            padding: 15px 0;
+        }
+
+        .title-agri {
+            color: #146c43;
+            font-weight: 700;
+        }
+
+        .order-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<nav class="navbar navbar-agri">
+
+    <div class="container">
+
+        <span class="navbar-brand text-white fw-bold">
+            🌱 Administration
+        </span>
+
+        <a href="{% url 'dashboard' %}"
+           class="btn btn-light btn-sm">
+
+            ← Tableau de bord
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container mt-5">
+
+    <h1 class="title-agri">
+        📦 Gestion des commandes
+    </h1>
+
+    <p class="text-muted">
+        Consultez et gérez les commandes des clients.
+    </p>
+
+
+    {% for commande in commandes %}
+
+        <div class="card order-card p-4 mb-4">
+
+            <div class="d-flex justify-content-between">
+
+                <div>
+
+                    <h5 class="title-agri">
+                        Commande #{{ commande.id }}
+                    </h5>
+
+                    <p class="mb-1">
+                        Client :
+                        <strong>
+                            {{ commande.client.username }}
+                        </strong>
+                    </p>
+
+                    <p class="text-muted">
+                        {{ commande.date_commande|date:"d/m/Y à H:i" }}
+                    </p>
+
+                </div>
+
+
+               <form method="post"
+      action="{% url 'modifier_statut_commande' commande.id %}"
+      class="d-flex align-items-center gap-2">
+
+    {% csrf_token %}
+
+    <select name="statut"
+            class="form-select form-select-sm">
+
+        {% for valeur, libelle in statut_choices %}
+
+            <option value="{{ valeur }}"
+                {% if commande.statut == valeur %}selected{% endif %}>
+
+                {{ libelle }}
+
+            </option>
+
+        {% endfor %}
+
+    </select>
+
+    <button type="submit"
+            class="btn btn-success btn-sm">
+
+        <i class="bi bi-check-lg"></i>
+        Modifier
+
+    </button>
+
+</form>
+
+            </div>
+
+
+            <hr>
+
+
+            <h6 class="title-agri">
+                Produits
+            </h6>
+
+
+            {% for ligne in commande.lignes.all %}
+
+                <p class="mb-1">
+
+                    <strong>
+                        {{ ligne.stock.produit.nom }}
+                    </strong>
+
+                    —
+                    {{ ligne.quantite }}
+                    {{ ligne.stock.produit.unite }}
+
+                    ×
+                    {{ ligne.prix_unitaire }}
+                    FCFA
+
+                </p>
+
+            {% endfor %}
+
+
+            <hr>
+
+
+            <p>
+                📍 <strong>Adresse de livraison :</strong><br>
+
+                {{ commande.adresse_livraison }}
+            </p>
+
+
+            <div class="text-end">
+
+                <h5 class="title-agri">
+
+                    Total :
+                    {{ commande.total }}
+                    FCFA
+
+                </h5>
+
+            </div>
+
+        </div>
+
+
+    {% empty %}
+
+        <div class="alert alert-info">
+
+            Aucune commande pour le moment.
+
+        </div>
+
+    {% endfor %}
+
+
+</div>
+
+</body>
+
+</html>

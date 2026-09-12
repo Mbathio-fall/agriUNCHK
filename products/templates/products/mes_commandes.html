@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Mes commandes - AgriMarket</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <style>
+
+        body {
+            background-color: #f5f9f6;
+        }
+
+        /* NAVBAR */
+
+        .navbar-agri {
+            background-color: #087f4f;
+            min-height: 70px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 21px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .logo:hover {
+            color: white;
+        }
+
+
+        /* CONTENU */
+
+        .page-container {
+            padding-top: 45px;
+            padding-bottom: 50px;
+        }
+
+        .title-agri {
+            color: #087f4f;
+            font-weight: 700;
+        }
+
+
+        /* CARTE COMMANDE */
+
+        .order-card {
+            background-color: white;
+            border: none;
+            border-radius: 18px;
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.07);
+            transition: 0.2s;
+        }
+
+        .order-card:hover {
+            transform: translateY(-2px);
+        }
+
+
+        /* ICONE */
+
+        .order-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background-color: #eaf7ef;
+            color: #087f4f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+        }
+
+
+        /* NUMERO */
+
+        .order-number {
+            color: #087f4f;
+            font-weight: 700;
+        }
+
+
+        /* PRODUIT */
+
+        .product-line {
+            background-color: #f8faf9;
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+        }
+
+        .product-name {
+            font-weight: 600;
+        }
+
+
+        /* TOTAL */
+
+        .total {
+            color: #087f4f;
+            font-size: 19px;
+            font-weight: 700;
+        }
+
+
+        /* BOUTON */
+
+        .btn-agri {
+            background-color: #198754;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .btn-agri:hover {
+            background-color: #087f4f;
+            color: white;
+        }
+
+
+        /* EMPTY */
+
+        .empty-card {
+            background-color: white;
+            border: none;
+            border-radius: 18px;
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.06);
+        }
+
+        .empty-icon {
+            font-size: 55px;
+            color: #087f4f;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-agri">
+
+    <div class="container">
+
+        <a href="{% url 'dashboard' %}"
+           class="logo">
+
+            🌱 AgriMarket
+
+        </a>
+
+
+        <a href="{% url 'catalogue_particulier' %}"
+           class="btn btn-light btn-sm">
+
+            <i class="bi bi-cart"></i>
+
+            Voir les produits
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- CONTENU -->
+
+<div class="container page-container">
+
+
+    <!-- TITRE -->
+
+    <div class="mb-4">
+
+        <h1 class="title-agri">
+
+            <i class="bi bi-box-seam"></i>
+
+            Mes commandes
+
+        </h1>
+
+        <p class="text-muted">
+
+            Consultez l'historique et l'état de vos commandes.
+
+        </p>
+
+    </div>
+
+
+
+    {% for commande in commandes %}
+
+
+        <!-- CARTE COMMANDE -->
+
+        <div class="card order-card mb-4">
+
+
+            <div class="card-body p-4">
+
+
+                <!-- EN-TÊTE -->
+
+                <div class="d-flex justify-content-between
+                            align-items-center flex-wrap gap-3">
+
+
+                    <div class="d-flex align-items-center">
+
+
+                        <div class="order-icon me-3">
+
+                            <i class="bi bi-receipt"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <h5 class="order-number mb-1">
+
+                                Commande #{{ commande.id }}
+
+                            </h5>
+
+
+                            <small class="text-muted">
+
+                                <i class="bi bi-calendar3"></i>
+
+                                {{ commande.date_commande|date:"d/m/Y à H:i" }}
+
+                            </small>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- STATUT -->
+
+                    {% if commande.statut == 'EN_ATTENTE' %}
+
+                        <span class="badge bg-warning text-dark">
+
+                            <i class="bi bi-clock"></i>
+
+                            {{ commande.get_statut_display }}
+
+                        </span>
+
+
+                    {% elif commande.statut == 'CONFIRMEE' %}
+
+                        <span class="badge bg-primary">
+
+                            <i class="bi bi-check-circle"></i>
+
+                            {{ commande.get_statut_display }}
+
+                        </span>
+
+
+                    {% elif commande.statut == 'EN_PREPARATION' %}
+
+                        <span class="badge bg-info text-dark">
+
+                            <i class="bi bi-box-seam"></i>
+
+                            {{ commande.get_statut_display }}
+
+                        </span>
+
+
+                    {% elif commande.statut == 'EN_LIVRAISON' %}
+
+                        <span class="badge bg-primary">
+
+                            <i class="bi bi-truck"></i>
+
+                            {{ commande.get_statut_display }}
+
+                        </span>
+
+
+                    {% elif commande.statut == 'LIVREE' %}
+
+                        <span class="badge bg-success">
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            {{ commande.get_statut_display }}
+
+                        </span>
+
+
+                    {% elif commande.statut == 'ANNULEE' %}
+
+                        <span class="badge bg-danger">
+
+                            <i class="bi bi-x-circle"></i>
+
+                            {{ commande.get_statut_display }}
+
+                        </span>
+
+
+                    {% endif %}
+
+
+                </div>
+
+
+
+                <hr>
+
+
+
+                <!-- PRODUITS -->
+
+                <h6 class="title-agri mb-3">
+
+                    <i class="bi bi-basket"></i>
+
+                    Produits commandés
+
+                </h6>
+
+
+                {% for ligne in commande.lignes.all %}
+
+
+                    <div class="product-line">
+
+
+                        <div class="d-flex justify-content-between
+                                    align-items-center flex-wrap">
+
+
+                            <div>
+
+
+                                <div class="product-name">
+
+                                    {{ ligne.stock.produit.nom }}
+
+                                </div>
+
+
+                                <small class="text-muted">
+
+                                    Quantité :
+                                    {{ ligne.quantite }}
+                                    {{ ligne.stock.produit.unite }}
+
+                                </small>
+
+
+                            </div>
+
+
+                            <div class="fw-semibold text-success">
+
+                                {{ ligne.sous_total }} FCFA
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                {% endfor %}
+
+
+
+                <!-- TOTAL + BOUTON -->
+
+                <div class="d-flex justify-content-between
+                            align-items-center flex-wrap gap-3 mt-4">
+
+
+                    <div>
+
+                        <small class="text-muted d-block">
+
+                            Total de la commande
+
+                        </small>
+
+
+                        <span class="total">
+
+                            {{ commande.total }} FCFA
+
+                        </span>
+
+                    </div>
+
+
+                    <a href="{% url 'commande_detail' commande.id %}"
+                       class="btn btn-agri">
+
+                        <i class="bi bi-eye"></i>
+
+                        Voir les détails
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    {% empty %}
+
+
+        <!-- AUCUNE COMMANDE -->
+
+        <div class="card empty-card">
+
+            <div class="card-body text-center py-5">
+
+
+                <i class="bi bi-box-seam empty-icon"></i>
+
+
+                <h3 class="title-agri mt-3">
+
+                    Aucune commande
+
+                </h3>
+
+
+                <p class="text-muted">
+
+                    Vous n'avez encore passé aucune commande.
+
+                </p>
+
+
+                <a href="{% url 'catalogue_particulier' %}"
+                   class="btn btn-agri">
+
+                    <i class="bi bi-cart"></i>
+
+                    Découvrir les produits
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+    {% endfor %}
+
+
+</div>
+
+
+</body>
+
+</html>

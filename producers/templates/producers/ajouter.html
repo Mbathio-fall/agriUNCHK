@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Ajouter un producteur - AgriMarket</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <style>
+
+        body {
+            background-color: #f6faf8;
+        }
+
+        .header {
+            background-color: #087443;
+            color: white;
+            padding: 20px;
+        }
+
+        .title {
+            color: #087443;
+            font-weight: 700;
+        }
+
+        .form-card {
+            background: white;
+            border: none;
+            border-radius: 14px;
+            box-shadow: 0 3px 15px rgba(0, 80, 40, 0.06);
+        }
+
+        .btn-green {
+            background-color: #087443;
+            color: white;
+            border: none;
+        }
+
+        .btn-green:hover {
+            background-color: #065c35;
+            color: white;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+    <div class="container">
+
+        <h4 class="mb-1">
+
+            <i class="bi bi-person-plus"></i>
+
+            Ajouter un producteur
+
+        </h4>
+
+        <small>
+            Enregistrer un nouveau producteur
+        </small>
+
+    </div>
+
+</div>
+
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7">
+
+            <div class="form-card p-4">
+
+                <h3 class="title mb-4">
+
+                    Informations du producteur
+
+                </h3>
+
+
+                <form method="post">
+
+                    {% csrf_token %}
+
+
+                    <!-- COMPTE UTILISATEUR -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Compte utilisateur
+                        </label>
+
+                        {{ form.utilisateur }}
+
+                        {% if form.utilisateur.errors %}
+
+                            <div class="text-danger small mt-1">
+                                {{ form.utilisateur.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- NOM -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Nom du producteur
+                        </label>
+
+                        {{ form.nom }}
+
+                        {% if form.nom.errors %}
+
+                            <div class="text-danger small mt-1">
+                                {{ form.nom.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- TELEPHONE -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Téléphone
+                        </label>
+
+                        {{ form.telephone }}
+
+                        {% if form.telephone.errors %}
+
+                            <div class="text-danger small mt-1">
+                                {{ form.telephone.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- LOCALISATION -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Localisation
+                        </label>
+
+                        {{ form.localisation }}
+
+                        {% if form.localisation.errors %}
+
+                            <div class="text-danger small mt-1">
+                                {{ form.localisation.errors }}
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- BOUTONS -->
+
+                    <div class="d-flex gap-2">
+
+                        <button type="submit"
+                                class="btn btn-green">
+
+                            <i class="bi bi-check-lg"></i>
+
+                            Enregistrer
+
+                        </button>
+
+
+                        <a href="{% url 'liste_producteurs' %}"
+                           class="btn btn-outline-secondary">
+
+                            Annuler
+
+                        </a>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

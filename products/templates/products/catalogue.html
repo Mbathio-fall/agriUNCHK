@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Catalogue - Plateforme Agricole</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+
+        body {
+            background-color: #f5f9f6;
+        }
+
+        /* Barre de navigation */
+
+        .navbar-agri {
+            background-color: #146c43;
+            padding: 15px 0;
+        }
+
+        /* Titre */
+
+        .title-agri {
+            color: #146c43;
+            font-weight: 700;
+        }
+
+        /* Carte produit */
+
+        .product-card {
+            border: none;
+            border-radius: 15px;
+            background-color: white;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Prix */
+
+        .price {
+            color: #198754;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        /* Stock */
+
+        .stock {
+            color: #66736b;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-agri">
+
+    <div class="container">
+
+        <span class="navbar-brand text-white fw-bold">
+            🌱 Plateforme Agricole
+        </span>
+
+
+        <div>
+
+            <span class="text-white me-3">
+                {{ user.username }}
+            </span>
+
+
+            <form method="post"
+                  action="{% url 'logout' %}"
+                  class="d-inline">
+
+                {% csrf_token %}
+
+                <button type="submit"
+                        class="btn btn-light btn-sm">
+
+                    Déconnexion
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- CONTENU -->
+
+<div class="container mt-5">
+
+
+    <div class="mb-4">
+
+        <h1 class="title-agri">
+            Nos produits 🌱
+        </h1>
+
+        <p class="text-muted">
+            Découvrez les produits agricoles disponibles.
+        </p>
+
+    </div>
+
+
+
+    <!-- PRODUITS -->
+
+    <div class="row">
+
+        {% for stock in stocks %}
+
+
+            <div class="col-md-4 mb-4">
+
+
+                <div class="card product-card p-4 h-100">
+
+
+                    <!-- Nom du produit -->
+
+                    <h4 class="title-agri">
+                        {{ stock.produit.nom }}
+                    </h4>
+
+
+                    <!-- Description -->
+
+                    {% if stock.produit.description %}
+
+                        <p class="text-muted">
+                            {{ stock.produit.description }}
+                        </p>
+
+                    {% endif %}
+
+
+
+                    <!-- PRIX SUPERMARCHÉ -->
+
+                    {% if user.role == 'SUPERMARCHE' %}
+
+                        {% if stock.prix_supermarche %}
+
+                            <div class="price mt-3">
+
+                                {{ stock.prix_supermarche }}
+                                FCFA /
+                                {{ stock.produit.unite }}
+
+                            </div>
+
+                        {% endif %}
+
+
+
+                    <!-- PRIX PARTICULIER -->
+
+                    {% elif user.role == 'PARTICULIER' %}
+
+                        {% if stock.prix_particulier %}
+
+                            <div class="price mt-3">
+
+                                {{ stock.prix_particulier }}
+                                FCFA /
+                                {{ stock.produit.unite }}
+
+                            </div>
+
+                        {% endif %}
+
+                    {% endif %}
+
+
+
+                    <!-- STOCK -->
+
+                    <p class="stock mt-3">
+
+                        Disponible :
+                        <strong>
+                            {{ stock.quantite }}
+                        </strong>
+                        {{ stock.produit.unite }}
+
+                    </p>
+
+
+
+                    <!-- BOUTON -->
+
+                   <a href="{% url 'commander' stock.id %}"
+                     class="btn btn-success mt-auto">
+
+                      🛒 Commander
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+        {% empty %}
+
+
+            <div class="col-12">
+
+                <div class="alert alert-success">
+
+                    Aucun produit disponible pour le moment.
+
+                </div>
+
+            </div>
+
+
+        {% endfor %}
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

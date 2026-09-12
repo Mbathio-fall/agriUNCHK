@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Produits - AgriMarket</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar"
+     style="background-color:#146c43;">
+
+    <div class="container">
+
+        <a href="{% url 'dashboard' %}"
+           class="navbar-brand text-white fw-bold">
+
+            🌱 AgriMarket
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container py-5">
+
+    <h1 style="color:#146c43;">
+        🛒 Produits disponibles
+    </h1>
+
+    <p class="text-muted">
+        Produits agricoles disponibles au tarif professionnel.
+    </p>
+
+
+    <div class="row g-4">
+
+        {% for stock in stocks %}
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm p-3">
+
+                <h5>
+                    {{ stock.produit.nom }}
+                </h5>
+
+                <p class="text-muted">
+                    Producteur :
+                    {{ stock.producteur.nom }}
+                </p>
+
+                <p>
+                    Disponible :
+                    <strong>
+                        {{ stock.quantite }}
+                        {{ stock.produit.unite }}
+                    </strong>
+                </p>
+
+                <p class="text-success fw-bold">
+
+                    {{ stock.prix_supermarche }}
+                    FCFA /
+                    {{ stock.produit.unite }}
+
+                </p>
+
+                <a href="{% url 'commander' stock.id %}"
+                   class="btn btn-success">
+
+                    Commander
+
+                </a>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="alert alert-info">
+
+            Aucun produit disponible.
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

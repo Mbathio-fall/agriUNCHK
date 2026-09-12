@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Administration - Plateforme Agricole</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f6faf8;
+            font-family: Arial, sans-serif;
+            color: #26352d;
+        }
+
+
+        /* ==========================
+           SIDEBAR
+        ========================== */
+
+        .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+
+    width: 250px;
+    height: 100vh;
+
+    background: #087443;
+    color: white;
+
+    padding: 25px 16px;
+
+    display: flex;
+    flex-direction: column;
+
+    transition: 0.3s;
+
+    z-index: 1000;
+}
+
+
+        .logo {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            font-size: 20px;
+            font-weight: 700;
+
+            padding: 5px 12px 30px;
+        }
+
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+
+            background: white;
+            color: #087443;
+
+            border-radius: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 21px;
+        }
+
+
+        /* MENU */
+
+       .menu {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+    padding-bottom: 10px;
+}
+
+        .menu-title {
+            font-size: 11px;
+            text-transform: uppercase;
+
+            color: rgba(255,255,255,0.55);
+
+            padding: 15px 13px 8px;
+
+            letter-spacing: 1px;
+        }
+
+
+        .menu a {
+            display: flex;
+            align-items: center;
+
+            gap: 14px;
+
+            color: rgba(255,255,255,0.88);
+
+            text-decoration: none;
+
+            padding: 12px 14px;
+
+            margin-bottom: 5px;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+
+            transition: 0.2s;
+        }
+
+
+        .menu a:hover,
+        .menu a.active {
+            background: #15945b;
+            color: white;
+        }
+
+
+        .menu-icon {
+            width: 22px;
+
+            font-size: 18px;
+
+            text-align: center;
+        }
+
+
+        /* BAS SIDEBAR */
+
+        .sidebar-bottom {
+    flex-shrink: 0;
+
+    border-top: 1px solid rgba(255,255,255,0.15);
+
+    padding-top: 12px;
+    margin-top: 8px;
+}
+        .logout-btn {
+            width: 100%;
+
+            background: transparent;
+
+            border: none;
+
+            color: rgba(255,255,255,0.9);
+
+            text-align: left;
+
+            padding: 12px 14px;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+        }
+
+
+        .logout-btn:hover {
+            background: #15945b;
+        }
+
+
+        /* ==========================
+           SIDEBAR REDUITE
+        ========================== */
+
+        .sidebar.collapsed {
+            width: 75px;
+        }
+
+
+        .sidebar.collapsed .logo-text,
+        .sidebar.collapsed .menu-text,
+        .sidebar.collapsed .menu-title {
+            display: none;
+        }
+
+
+        .sidebar.collapsed .logo {
+            justify-content: center;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+
+        .sidebar.collapsed .menu a {
+            justify-content: center;
+        }
+
+
+        .sidebar.collapsed .sidebar-bottom {
+            left: 10px;
+            right: 10px;
+        }
+
+
+        .sidebar.collapsed .logout-btn {
+            text-align: center;
+        }
+
+
+        .sidebar.collapsed .logout-btn i {
+            margin: 0 !important;
+        }
+
+
+        /* ==========================
+           CONTENU
+        ========================== */
+
+        .main {
+            margin-left: 250px;
+
+            min-height: 100vh;
+
+            transition: 0.3s;
+        }
+
+
+        .main.expanded {
+            margin-left: 75px;
+        }
+
+
+        /* ==========================
+           TOPBAR
+        ========================== */
+
+        .topbar {
+            height: 72px;
+
+            background: white;
+
+            border-bottom: 1px solid #e7eee9;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 32px;
+        }
+
+
+        .menu-toggle {
+            border: none;
+
+            background: transparent;
+
+            color: #087443;
+
+            font-size: 24px;
+
+            width: 42px;
+            height: 42px;
+
+            border-radius: 9px;
+
+            cursor: pointer;
+        }
+
+
+        .menu-toggle:hover {
+            background: #edf7f1;
+        }
+
+
+        .admin-profile {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 50%;
+
+            background: #e6f5ed;
+
+            color: #087443;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 18px;
+        }
+
+
+        .admin-name {
+            font-size: 14px;
+
+            font-weight: 700;
+        }
+
+
+        .admin-role {
+            font-size: 11px;
+
+            color: #849089;
+        }
+
+
+        /* ==========================
+           CONTENU
+        ========================== */
+
+        .content {
+            padding: 32px;
+        }
+
+
+        .page-title {
+            font-size: 27px;
+
+            font-weight: 700;
+
+            color: #087443;
+
+            margin-bottom: 5px;
+        }
+
+
+        .page-subtitle {
+            color: #7a8780;
+
+            font-size: 14px;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* ==========================
+           STATISTIQUES
+        ========================== */
+
+        .stat-card {
+            background: white;
+
+            border: 1px solid #edf2ef;
+
+            border-radius: 14px;
+
+            padding: 22px;
+
+            height: 100%;
+
+            box-shadow: 0 3px 15px rgba(0,80,40,0.05);
+
+            transition: 0.2s;
+        }
+
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+
+            box-shadow: 0 7px 22px rgba(0,80,40,0.09);
+        }
+
+
+        .stat-top {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+        }
+
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+
+            border-radius: 11px;
+
+            background: #eaf6ef;
+
+            color: #087443;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 21px;
+        }
+
+
+        .stat-label {
+            margin-top: 18px;
+
+            font-size: 13px;
+
+            color: #7a8780;
+        }
+
+
+        .stat-number {
+            font-size: 29px;
+
+            font-weight: 700;
+
+            color: #087443;
+
+            margin-top: 3px;
+        }
+
+
+        .stat-description {
+            font-size: 11px;
+
+            color: #99a39e;
+
+            margin-top: 4px;
+        }
+
+
+        /* ==========================
+           BLOCS
+        ========================== */
+
+        .dashboard-card {
+            background: white;
+
+            border: 1px solid #edf2ef;
+
+            border-radius: 14px;
+
+            padding: 24px;
+
+            box-shadow: 0 3px 15px rgba(0,80,40,0.05);
+        }
+
+
+        .card-title {
+            font-size: 17px;
+
+            font-weight: 700;
+
+            margin-bottom: 20px;
+
+            color: #26352d;
+        }
+
+
+        /* ==========================
+           SUIVI COMMANDES
+        ========================== */
+
+        .order-box {
+            padding: 16px;
+
+            border-radius: 10px;
+
+            text-align: center;
+
+            border: 1px solid #edf2ef;
+        }
+
+
+        .order-icon {
+            font-size: 22px;
+
+            color: #087443;
+        }
+
+
+        .order-number {
+            font-size: 22px;
+
+            font-weight: 700;
+
+            color: #087443;
+
+            margin-top: 5px;
+        }
+
+
+        .order-label {
+            font-size: 12px;
+
+            color: #7a8780;
+        }
+
+
+        /* ==========================
+           ACTIVITE
+        ========================== */
+
+        .activity-item {
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 12px 0;
+
+            border-bottom: 1px solid #edf2ef;
+        }
+
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+
+        .activity-icon {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 9px;
+
+            background: #eaf6ef;
+
+            color: #087443;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+
+        .activity-title {
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        .activity-text {
+            font-size: 11px;
+
+            color: #8a958f;
+        }
+
+
+        /* ==========================
+           BOUTONS
+        ========================== */
+
+        .btn-green {
+            background: #087443;
+
+            border: none;
+
+            color: white;
+
+            border-radius: 8px;
+
+            padding: 9px 16px;
+
+            font-size: 13px;
+        }
+
+
+        .btn-green:hover {
+            background: #065c35;
+
+            color: white;
+        }
+
+
+        /* ==========================
+           RESPONSIVE
+        ========================== */
+
+        @media(max-width: 768px) {
+
+            .sidebar {
+                width: 75px;
+            }
+
+            .sidebar .logo-text,
+            .sidebar .menu-text,
+            .sidebar .menu-title {
+                display: none;
+            }
+
+            .sidebar .menu a {
+                justify-content: center;
+            }
+
+            .main {
+                margin-left: 75px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .topbar {
+                padding: 0 20px;
+            }
+
+        }
+
+
+
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.menu-item:hover {
+    background-color: #15945f;
+    color: white;
+}
+
+.menu-item i {
+    font-size: 21px;
+    width: 25px;
+    text-align: center;
+}
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar" id="sidebar">
+
+
+    <!-- LOGO -->
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            <i class="bi bi-flower1"></i>
+        </div>
+
+        <span class="logo-text">
+            AgriUNCHK
+        </span>
+
+    </div>
+
+
+    <!-- MENU -->
+
+    <div class="menu">
+
+
+        <div class="menu-title">
+            Principal
+        </div>
+
+
+        <a href="#"
+           class="active">
+
+            <span class="menu-icon">
+                <i class="bi bi-grid-1x2-fill"></i>
+            </span>
+
+            <span class="menu-text">
+                Tableau de bord
+            </span>
+
+        </a>
+
+
+        <a href="{% url 'liste_commandes' %}">
+
+            <span class="menu-icon">
+                <i class="bi bi-bag-check"></i>
+            </span>
+
+            <span class="menu-text">
+                Commandes
+            </span>
+
+        </a>
+
+
+        <div class="menu-title">
+            Gestion
+        </div>
+
+
+        <a href="{% url 'liste_producteurs' %}">
+
+    <span class="menu-icon">
+        <i class="bi bi-people"></i>
+    </span>
+
+    <span class="menu-text">
+        Producteurs
+    </span>
+
+</a>
+
+
+        <a href="{% url 'liste_produits' %}">
+
+    <span class="menu-icon">
+
+        <i class="bi bi-box-seam"></i>
+
+    </span>
+
+    <span class="menu-text">
+
+        Produits
+
+    </span>
+
+</a>
+
+        <a href="{% url 'liste_stocks' %}" class="menu-item">
+
+    <i class="bi bi-boxes"></i>
+
+    <span>Stocks</span>
+
+</a>
+
+
+<a href="{% url 'liste_supermarches' %}">
+            <span class="menu-icon">
+                <i class="bi bi-shop"></i>
+            </span>
+
+            <span class="menu-text">
+                Supermarchés
+            </span>
+
+        </a>
+
+
+<a href="{% url 'liste_particuliers' %}">
+            <span class="menu-icon">
+                <i class="bi bi-person"></i>
+            </span>
+
+            <span class="menu-text">
+                Particuliers
+            </span>
+
+        </a>
+
+        <a href="{% url 'liste_utilisateurs' %}">
+
+    <span class="menu-icon">
+        <i class="bi bi-people-fill"></i>
+    </span>
+
+    <span class="menu-text">
+        Utilisateurs
+    </span>
+
+</a>
+
+
+        
+
+
+    </div>
+
+
+    <!-- DECONNEXION -->
+
+    <div class="sidebar-bottom">
+
+        <form method="post"
+              action="{% url 'logout' %}">
+
+            {% csrf_token %}
+
+            <button type="submit"
+                    class="logout-btn">
+
+                <i class="bi bi-box-arrow-left me-2"></i>
+
+                <span class="menu-text">
+                    Déconnexion
+                </span>
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =====================================================
+     CONTENU PRINCIPAL
+===================================================== -->
+
+<main class="main" id="main">
+
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+
+        <button class="menu-toggle"
+                onclick="toggleSidebar()">
+
+            <i class="bi bi-list"></i>
+
+        </button>
+
+
+        <div class="admin-profile">
+
+            <div class="admin-avatar">
+
+                <i class="bi bi-person-fill"></i>
+
+            </div>
+
+
+            <div>
+
+                <div class="admin-name">
+                    {{ user.username }}
+                </div>
+
+                <div class="admin-role">
+                    Administrateur
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- CONTENU -->
+
+    <div class="content">
+
+
+        <h1 class="page-title">
+            Tableau de bord
+        </h1>
+
+        <p class="page-subtitle">
+            Vue générale de votre plateforme agricole
+        </p>
+
+
+
+        <!-- =================================================
+             STATISTIQUES
+        ================================================== -->
+
+        <div class="row g-4">
+
+
+            <!-- COMMANDES -->
+
+            <div class="col-xl-4 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div>
+
+                            <div class="stat-label">
+                                Total des commandes
+                            </div>
+
+                            <div class="stat-number">
+                                {{ nombre_commandes }}
+                            </div>
+
+                            <div class="stat-description">
+                                Toutes les commandes
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat-icon">
+
+                            <i class="bi bi-bag-check"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PRODUCTEURS -->
+
+            <div class="col-xl-4 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div>
+
+                            <div class="stat-label">
+                                Producteurs
+                            </div>
+
+                            <div class="stat-number">
+                                {{ nombre_producteurs }}
+                            </div>
+
+                            <div class="stat-description">
+                                Producteurs enregistrés
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat-icon">
+
+                            <i class="bi bi-person-workspace"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PRODUITS -->
+
+            <div class="col-xl-4 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div>
+
+                            <div class="stat-label">
+                                Produits
+                            </div>
+
+                            <div class="stat-number">
+                                {{ nombre_produits }}
+                            </div>
+
+                            <div class="stat-description">
+                                Produits enregistrés
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat-icon">
+
+                            <i class="bi bi-box-seam"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- STOCKS -->
+
+            <div class="col-xl-4 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div>
+
+                            <div class="stat-label">
+                                Stocks
+                            </div>
+
+                            <div class="stat-number">
+                                {{ nombre_stocks }}
+                            </div>
+
+                            <div class="stat-description">
+                                Stocks disponibles
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat-icon">
+
+                            <i class="bi bi-boxes"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SUPERMARCHES -->
+
+            <div class="col-xl-4 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div>
+
+                            <div class="stat-label">
+                                Supermarchés
+                            </div>
+
+                            <div class="stat-number">
+                                {{ nombre_supermarches }}
+                            </div>
+
+                            <div class="stat-description">
+                                Clients professionnels
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat-icon">
+
+                            <i class="bi bi-shop"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PARTICULIERS -->
+
+            <div class="col-xl-4 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div>
+
+                            <div class="stat-label">
+                                Particuliers
+                            </div>
+
+                            <div class="stat-number">
+                                {{ nombre_particuliers }}
+                            </div>
+
+                            <div class="stat-description">
+                                Clients particuliers
+                            </div>
+
+                        </div>
+
+
+                        <div class="stat-icon">
+
+                            <i class="bi bi-people"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             PARTIE BASSE
+        ================================================== -->
+
+        <div class="row g-4 mt-2">
+
+
+            <!-- SUIVI COMMANDES -->
+
+            <div class="col-lg-7">
+
+                <div class="dashboard-card">
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+
+                        <div class="card-title mb-0">
+                            Suivi des commandes
+                        </div>
+
+                        <a href="{% url 'liste_commandes' %}"
+                           class="btn btn-green">
+
+                            Voir tout
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="row g-3">
+
+
+                        <!-- ATTENTE -->
+
+                        <div class="col-md-6">
+
+                            <div class="order-box">
+
+                                <div class="order-icon">
+
+                                    <i class="bi bi-clock-history"></i>
+
+                                </div>
+
+                                <div class="order-number">
+                                    {{ commandes_en_attente }}
+                                </div>
+
+                                <div class="order-label">
+                                    En attente
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PREPARATION -->
+
+                        <div class="col-md-6">
+
+                            <div class="order-box">
+
+                                <div class="order-icon">
+
+                                    <i class="bi bi-box-seam"></i>
+
+                                </div>
+
+                                <div class="order-number">
+                                    {{ commandes_preparation }}
+                                </div>
+
+                                <div class="order-label">
+                                    En préparation
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- LIVRAISON -->
+
+                        <div class="col-md-6">
+
+                            <div class="order-box">
+
+                                <div class="order-icon">
+
+                                    <i class="bi bi-truck"></i>
+
+                                </div>
+
+                                <div class="order-number">
+                                    {{ commandes_en_livraison }}
+                                </div>
+
+                                <div class="order-label">
+                                    En livraison
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- LIVREES -->
+
+                        <div class="col-md-6">
+
+                            <div class="order-box">
+
+                                <div class="order-icon">
+
+                                    <i class="bi bi-check-circle"></i>
+
+                                </div>
+
+                                <div class="order-number">
+                                    {{ commandes_livrees }}
+                                </div>
+
+                                <div class="order-label">
+                                    Livrées
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ACTIVITE -->
+
+            <div class="col-lg-5">
+
+                <div class="dashboard-card">
+
+                    <div class="card-title">
+                        Activité de la plateforme
+                    </div>
+
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon">
+
+                            <i class="bi bi-bag-check"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="activity-title">
+                                Commandes
+                            </div>
+
+                            <div class="activity-text">
+                                {{ nombre_commandes }} commande(s)
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon">
+
+                            <i class="bi bi-person-workspace"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="activity-title">
+                                Producteurs
+                            </div>
+
+                            <div class="activity-text">
+                                {{ nombre_producteurs }} producteur(s)
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon">
+
+                            <i class="bi bi-box-seam"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="activity-title">
+                                Produits
+                            </div>
+
+                            <div class="activity-text">
+                                {{ nombre_produits }} produit(s)
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon">
+
+                            <i class="bi bi-people"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="activity-title">
+                                Clients
+                            </div>
+
+                            <div class="activity-text">
+                                {{ nombre_supermarches }} supermarché(s) ·
+                                {{ nombre_particuliers }} particulier(s)
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+function toggleSidebar() {
+
+    const sidebar = document.getElementById("sidebar");
+    const main = document.getElementById("main");
+
+    sidebar.classList.toggle("collapsed");
+    main.classList.toggle("expanded");
+
+}
+
+</script>
+
+
+</body>
+
+</html>

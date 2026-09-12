@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Produits - AgriMarket</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <style>
+
+        body {
+            background-color: #f5f9f6;
+            font-family: Arial, sans-serif;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar-agri {
+            background-color: #087f4f;
+            min-height: 70px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 21px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .logo:hover {
+            color: white;
+        }
+
+
+        .user-name {
+            color: white;
+            margin-right: 15px;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .page-header {
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            color: #087f4f;
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            color: #6c757d;
+        }
+
+
+        /* =========================
+           SEARCH
+        ========================= */
+
+        .search-box {
+            background-color: white;
+            border-radius: 12px;
+            padding: 12px 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .search-box i {
+            color: #087f4f;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            width: 100%;
+        }
+
+
+        /* =========================
+           PRODUCT CARD
+        ========================= */
+
+        .product-card {
+            background-color: white;
+            border: none;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+            transition: all 0.25s ease;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.10);
+        }
+
+
+        .product-top {
+            height: 130px;
+            background-color: #eaf7ef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .product-icon {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background-color: white;
+            color: #087f4f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+
+        .product-body {
+            padding: 23px;
+        }
+
+
+        .product-name {
+            color: #087f4f;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+
+        .product-info {
+            color: #6c757d;
+            font-size: 14px;
+            margin-bottom: 9px;
+        }
+
+
+        .product-info i {
+            color: #087f4f;
+            margin-right: 5px;
+        }
+
+
+        /* =========================
+           STOCK
+        ========================= */
+
+        .stock-badge {
+            display: inline-block;
+            background-color: #e8f7ef;
+            color: #087f4f;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 10px;
+            border-radius: 20px;
+            margin-top: 5px;
+        }
+
+
+        /* =========================
+           PRICE
+        ========================= */
+
+        .price {
+            color: #087f4f;
+            font-size: 22px;
+            font-weight: 700;
+            margin-top: 15px;
+        }
+
+        .price-unit {
+            color: #6c757d;
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        .btn-agri {
+            background-color: #198754;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            padding: 11px;
+            font-weight: 600;
+            width: 100%;
+            transition: 0.2s;
+        }
+
+        .btn-agri:hover {
+            background-color: #087f4f;
+            color: white;
+        }
+
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty-box {
+            background-color: white;
+            border-radius: 18px;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .empty-box i {
+            font-size: 55px;
+            color: #087f4f;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 768px) {
+
+            .user-name {
+                display: none;
+            }
+
+            .page-header {
+                margin-top: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar navbar-agri">
+
+    <div class="container">
+
+
+        <a href="{% url 'dashboard' %}"
+           class="logo">
+
+            🌱 AgriMarket
+
+        </a>
+
+
+        <div class="d-flex align-items-center">
+
+
+            <span class="user-name">
+
+                <i class="bi bi-person-circle"></i>
+
+                {{ user.username }}
+
+            </span>
+
+
+            <a href="{% url 'mes_commandes' %}"
+               class="btn btn-light btn-sm me-2">
+
+                <i class="bi bi-bag-check"></i>
+
+                Mes commandes
+
+            </a>
+
+
+            <form method="post"
+                  action="{% url 'logout' %}"
+                  class="d-inline">
+
+                {% csrf_token %}
+
+                <button type="submit"
+                        class="btn btn-light btn-sm">
+
+                    <i class="bi bi-box-arrow-right"></i>
+
+                    Déconnexion
+
+                </button>
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================
+     CONTENU
+========================= -->
+
+<div class="container">
+
+
+    <!-- TITRE -->
+
+    <div class="page-header">
+
+
+        <div class="row align-items-center">
+
+
+            <div class="col-md-7">
+
+                <h1 class="page-title">
+
+                    🛒 Produits disponibles
+
+                </h1>
+
+                <p class="page-subtitle">
+
+                    Découvrez les produits agricoles disponibles
+                    et choisissez ceux que vous souhaitez commander.
+
+                </p>
+
+            </div>
+
+
+            <div class="col-md-5 mt-3 mt-md-0">
+
+
+                <div class="search-box d-flex align-items-center">
+
+                    <i class="bi bi-search me-2"></i>
+
+                    <input type="text"
+                           id="searchProduct"
+                           placeholder="Rechercher un produit...">
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- PRODUITS -->
+
+    {% if stocks %}
+
+
+        <div class="row g-4"
+             id="productList">
+
+
+            {% for stock in stocks %}
+
+
+                <div class="col-md-6 col-lg-4 product-item">
+
+
+                    <div class="product-card">
+
+
+                        <!-- IMAGE / ICONE -->
+
+                        <div class="product-top">
+
+                            <div class="product-icon">
+
+                                <i class="bi bi-basket2"></i>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- INFORMATIONS -->
+
+                        <div class="product-body">
+
+
+                            <h4 class="product-name">
+
+                                {{ stock.produit.nom }}
+
+                            </h4>
+
+
+                            <p class="product-info">
+
+                                <i class="bi bi-person"></i>
+
+                                Producteur :
+
+                                <strong>
+                                    {{ stock.producteur.nom }}
+                                </strong>
+
+                            </p>
+
+
+                            <p class="product-info">
+
+                                <i class="bi bi-geo-alt"></i>
+
+                                {{ stock.producteur.localisation }}
+
+                            </p>
+
+
+                            <span class="stock-badge">
+
+                                <i class="bi bi-check-circle"></i>
+
+                                Disponible :
+
+                                {{ stock.quantite }}
+
+                                {{ stock.produit.unite }}
+
+                            </span>
+
+
+                            <div class="price">
+
+                                {{ stock.prix_particulier }} FCFA
+
+                                <span class="price-unit">
+
+                                    / {{ stock.produit.unite }}
+
+                                </span>
+
+                            </div>
+
+
+                            <div class="mt-3">
+
+
+                                <a href="{% url 'commander' stock.id %}"
+                                   class="btn btn-agri">
+
+                                    <i class="bi bi-cart-plus me-1"></i>
+
+                                    Commander
+
+                                </a>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    {% else %}
+
+
+        <!-- AUCUN PRODUIT -->
+
+        <div class="empty-box">
+
+
+            <i class="bi bi-basket3"></i>
+
+
+            <h3 class="mt-3">
+
+                Aucun produit disponible
+
+            </h3>
+
+
+            <p class="text-muted">
+
+                Aucun produit n'est actuellement disponible
+                à la vente.
+
+            </p>
+
+
+            <a href="{% url 'dashboard' %}"
+               class="btn btn-agri"
+               style="width: auto;">
+
+                <i class="bi bi-arrow-left"></i>
+
+                Retour au tableau de bord
+
+            </a>
+
+
+        </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+
+<!-- =========================
+     RECHERCHE
+========================= -->
+
+<script>
+
+    const searchInput =
+        document.getElementById("searchProduct");
+
+    const products =
+        document.querySelectorAll(".product-item");
+
+
+    searchInput.addEventListener("keyup", function () {
+
+        const search =
+            this.value.toLowerCase();
+
+
+        products.forEach(function (product) {
+
+            const name =
+                product.innerText.toLowerCase();
+
+
+            if (name.includes(search)) {
+
+                product.style.display = "";
+
+            } else {
+
+                product.style.display = "none";
+
+            }
+
+        });
+
+    });
+
+</script>
+
+
+</body>
+
+</html>

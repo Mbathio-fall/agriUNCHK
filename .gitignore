@@ -1,0 +1,20 @@
+# Environnement virtuel 
+venv/ 
+
+#Fichier python compilée
+__pycache__
+*.pyc
+*.pyo
+
+#Base de donnée local
+db.sqlite3
+
+# Variable d'environement (secrete !)
+.env
+
+# Fihiers statique collecter
+staticfiles/
+
+# IDE
+.vscode
+.idea/

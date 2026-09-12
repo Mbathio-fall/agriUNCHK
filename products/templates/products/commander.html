@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Confirmer la commande - AgriMarket</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+    <style>
+
+        body {
+            background-color: #f5f9f6;
+            font-family: Arial, sans-serif;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar-agri {
+            background-color: #087f4f;
+            min-height: 70px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 21px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .logo:hover {
+            color: white;
+        }
+
+
+        /* =========================
+           CONTENU
+        ========================= */
+
+        .page-container {
+            padding-top: 45px;
+            padding-bottom: 50px;
+        }
+
+
+        .page-title {
+            color: #087f4f;
+            font-weight: 700;
+        }
+
+
+        .subtitle {
+            color: #6c757d;
+        }
+
+
+        /* =========================
+           CARTE PRODUIT
+        ========================= */
+
+        .order-card {
+            background-color: white;
+            border: none;
+            border-radius: 18px;
+            box-shadow: 0 7px 25px rgba(0,0,0,0.07);
+            overflow: hidden;
+        }
+
+
+        .product-header {
+            background-color: #eaf7ef;
+            padding: 30px;
+            text-align: center;
+        }
+
+
+        .product-icon {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background-color: white;
+            color: #087f4f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            font-size: 35px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+
+        .product-name {
+            color: #087f4f;
+            font-weight: 700;
+            margin-top: 15px;
+        }
+
+
+        /* =========================
+           INFORMATIONS
+        ========================= */
+
+        .info-box {
+            background-color: #f8faf9;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+
+        .info-label {
+            color: #6c757d;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+
+        .info-value {
+            color: #212529;
+            font-weight: 600;
+        }
+
+
+        .price {
+            color: #087f4f;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+
+        /* =========================
+           FORMULAIRE
+        ========================= */
+
+        .form-label {
+            font-weight: 600;
+            color: #343a40;
+        }
+
+
+        .form-control {
+            border-radius: 9px;
+            padding: 12px;
+        }
+
+
+        .form-control:focus {
+            border-color: #198754;
+            box-shadow: 0 0 0 0.2rem rgba(25,135,84,0.15);
+        }
+
+
+        /* =========================
+           TOTAL
+        ========================= */
+
+        .total-box {
+            background-color: #eaf7ef;
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+
+        .total-label {
+            color: #495057;
+            font-weight: 600;
+        }
+
+
+        .total-price {
+            color: #087f4f;
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+
+        /* =========================
+           BOUTONS
+        ========================= */
+
+        .btn-agri {
+            background-color: #198754;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            padding: 12px;
+            font-weight: 600;
+        }
+
+
+        .btn-agri:hover {
+            background-color: #087f4f;
+            color: white;
+        }
+
+
+        .btn-back {
+            border: 1px solid #198754;
+            color: #087f4f;
+            background-color: white;
+            border-radius: 9px;
+        }
+
+
+        .btn-back:hover {
+            background-color: #eaf7ef;
+            color: #087f4f;
+        }
+
+
+        /* =========================
+           LIVRAISON
+        ========================= */
+
+        .delivery-info {
+            background-color: #fff8e8;
+            border-left: 4px solid #f0ad4e;
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-size: 14px;
+            color: #6c5a35;
+            margin-top: 15px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar navbar-agri">
+
+    <div class="container">
+
+
+        <a href="{% url 'dashboard' %}"
+           class="logo">
+
+            🌱 AgriMarket
+
+        </a>
+
+
+        <a href="{% url 'catalogue_particulier' %}"
+           class="btn btn-light btn-sm">
+
+            <i class="bi bi-arrow-left"></i>
+
+            Retour aux produits
+
+        </a>
+
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================
+     CONTENU
+========================= -->
+
+<div class="container page-container">
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="col-lg-8">
+
+
+            <div class="mb-4">
+
+                <h1 class="page-title">
+
+                    Confirmer votre commande
+
+                </h1>
+
+                <p class="subtitle">
+
+                    Vérifiez les informations avant de confirmer
+                    votre commande.
+
+                </p>
+
+            </div>
+
+
+            <div class="card order-card">
+
+
+                <!-- PRODUIT -->
+
+                <div class="product-header">
+
+
+                    <div class="product-icon">
+
+                        <i class="bi bi-basket2"></i>
+
+                    </div>
+
+
+                    <h3 class="product-name">
+
+                        {{ stock.produit.nom }}
+
+                    </h3>
+
+
+                    {% if stock.produit.description %}
+
+                        <p class="text-muted mb-0">
+
+                            {{ stock.produit.description }}
+
+                        </p>
+
+                    {% endif %}
+
+
+                </div>
+
+
+
+                <div class="card-body p-4 p-md-5">
+
+
+                    <!-- INFORMATIONS PRODUIT -->
+
+                    <div class="row">
+
+
+                        <div class="col-md-6">
+
+
+                            <div class="info-box">
+
+                                <div class="info-label">
+
+                                    <i class="bi bi-person"></i>
+
+                                    Producteur
+
+                                </div>
+
+                                <div class="info-value">
+
+                                    {{ stock.producteur.nom }}
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+
+                            <div class="info-box">
+
+                                <div class="info-label">
+
+                                    <i class="bi bi-box-seam"></i>
+
+                                    Stock disponible
+
+                                </div>
+
+                                <div class="info-value">
+
+                                    {{ stock.quantite }}
+
+                                    {{ stock.produit.unite }}
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- PRIX -->
+
+                    <div class="info-box">
+
+
+                        <div class="info-label">
+
+                            Prix particulier
+
+                        </div>
+
+
+                        <div class="price">
+
+                            {{ stock.prix_particulier }}
+
+                            FCFA
+
+                            <small class="text-muted fs-6">
+
+                                / {{ stock.produit.unite }}
+
+                            </small>
+
+                        </div>
+
+
+                    </div>
+
+
+                    {% if erreur %}
+
+                        <div class="alert alert-danger">
+
+                            <i class="bi bi-exclamation-triangle"></i>
+
+                            {{ erreur }}
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    <!-- FORMULAIRE -->
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+
+                        <!-- QUANTITE -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+
+                                Quantité souhaitée
+
+                            </label>
+
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+
+                                    <i class="bi bi-hash"></i>
+
+                                </span>
+
+
+                                <input
+                                    type="number"
+                                    name="quantite"
+                                    id="quantite"
+                                    class="form-control"
+                                    min="0.01"
+                                    step="0.01"
+                                    max="{{ stock.quantite }}"
+                                    required
+                                >
+
+
+                                <span class="input-group-text">
+
+                                    {{ stock.produit.unite }}
+
+                                </span>
+
+                            </div>
+
+
+                            <small class="text-muted">
+
+                                Maximum disponible :
+                                {{ stock.quantite }}
+                                {{ stock.produit.unite }}
+
+                            </small>
+
+                        </div>
+
+
+
+                        <!-- ADRESSE -->
+
+                        <div class="mb-3">
+
+
+                            <label class="form-label">
+
+                                <i class="bi bi-geo-alt"></i>
+
+                                Adresse de livraison
+
+                            </label>
+
+
+                            <textarea
+                                name="adresse_livraison"
+                                id="adresse_livraison"
+                                class="form-control"
+                                rows="4"
+                                placeholder="Exemple : Dakar, Parcelles Assainies, Unité 15"
+                                required></textarea>
+
+
+                        </div>
+
+
+                        <!-- INFORMATION LIVRAISON -->
+
+                        <div class="delivery-info">
+
+                            <i class="bi bi-info-circle"></i>
+
+                            <strong>Livraison :</strong>
+
+                            les frais de livraison seront discutés
+                            directement avec le livreur.
+
+                        </div>
+
+
+
+                        <!-- TOTAL -->
+
+                        <div class="total-box d-flex justify-content-between align-items-center">
+
+                            <span class="total-label">
+
+                                Total de la commande
+
+                            </span>
+
+
+                            <span class="total-price"
+                                  id="total">
+
+                                0 FCFA
+
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- BOUTONS -->
+
+                        <div class="d-flex gap-2">
+
+
+                            <a href="{% url 'catalogue_particulier' %}"
+                               class="btn btn-back flex-fill py-2">
+
+                                <i class="bi bi-arrow-left"></i>
+
+                                Annuler
+
+                            </a>
+
+
+                            <button type="submit"
+                                    class="btn btn-agri flex-fill">
+
+                                <i class="bi bi-check-circle"></i>
+
+                                Confirmer la commande
+
+                            </button>
+
+
+                        </div>
+
+
+                    </form>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     CALCUL DU TOTAL
+========================= -->
+
+<script>
+
+    const quantiteInput =
+        document.getElementById("quantite");
+
+    const totalElement =
+        document.getElementById("total");
+
+    const prix =
+        parseFloat("{{ stock.prix_particulier }}");
+
+
+    quantiteInput.addEventListener("input", function () {
+
+        const quantite =
+            parseFloat(this.value) || 0;
+
+
+        const total =
+            quantite * prix;
+
+
+        totalElement.textContent =
+            total.toLocaleString("fr-FR") + " FCFA";
+
+    });
+
+</script>
+
+
+</body>
+
+</html>
