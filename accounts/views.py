@@ -17,17 +17,7 @@ def inscription(request):
         form = InscriptionForm(request.POST)
 
         if form.is_valid():
-
-            user = form.save()
-
-            if user.role == 'PRODUCTEUR':
-                Producteur.objects.create(
-                    utilisateur=user,
-                    nom=user.username,
-                    telephone='',
-                    localisation=''
-                )
-
+            form.save()
             return redirect('login')
 
     else:
@@ -39,6 +29,13 @@ def inscription(request):
         'accounts/inscription.html',
         {'form': form}
     )
+
+
+class ConnexionView(LoginView):
+
+    template_name = 'accounts/login.html'
+
+
 @login_required
 def dashboard(request):
 

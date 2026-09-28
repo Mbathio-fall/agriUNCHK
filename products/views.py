@@ -200,7 +200,6 @@ def mes_commandes(request):
 
 
 @login_required
-@login_required
 def liste_produits(request):
 
     if request.user.role == 'PRODUCTEUR':
@@ -248,7 +247,6 @@ def ajouter_produit(request):
 # STOCKS
 # =========================
 
-@login_required
 @login_required
 def liste_stocks(request):
 
